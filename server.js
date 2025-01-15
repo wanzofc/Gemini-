@@ -1,5 +1,7 @@
-import express from "express";  // Gunakan import untuk Express
-import cors from "cors";
+const express = require("express"); // Gunakan require untuk Express
+const axios = require("axios"); // Gunakan axios untuk permintaan HTTP
+const cors = require("cors");
+
 const app = express();
 const port = 3000;
 const creator = "wanzofc"; // Nama Pembuat API
@@ -21,7 +23,7 @@ app.get("/", (req, res) => {
 // Endpoint real-time dari API eksternal Gemini
 app.get("/ai/gemini", async (req, res) => {
   let text = req.query.text;
-
+  
   if (!text) {
     return res.json({
       status: false,
@@ -32,9 +34,9 @@ app.get("/ai/gemini", async (req, res) => {
   }
 
   try {
-    const fetch = await import("node-fetch"); // Dynamic import untuk node-fetch
-    const response = await fetch.default(`https://gemini-production.up.railway.app/?query=${text}&key=${API_KEY}`);
-    const data = await response.json();
+    // Membuat permintaan ke API eksternal Gemini dengan menyertakan API Key menggunakan axios
+    const response = await axios.get(`https://gemini-production.up.railway.app/?query=${text}&key=${API_KEY}`);
+    const data = response.data;
 
     if (data.status !== true) {
       res.json({
