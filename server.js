@@ -13,7 +13,7 @@ app.use(express.json());
 app.get("/GeminiData", async (req, res) => {
   try {
     // Contoh permintaan real-time (API disesuaikan)
-    const response = await axios.get(`https://example.com/data?key=${API_KEY}`);
+    const response = await axios.get(`https://gemini-production.up.railway.app//data?key=${API_KEY}`);
     res.status(200).json({
       name: "Gemini API",
       data: response.data,
